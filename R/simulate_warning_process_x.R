@@ -231,7 +231,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
     output <- lapply(1:length(valid_windows_month), FUN = function(i){
       if(measure == "median"){
         if(valid_windows_month[i] & valid_windows_year[i]){
-          current_date <- sub_data_month[[i]]$`Measured At`[which.max(sub_data_month[[i]]$`Measured At`)]
+          current_date <- bias_month_warning_end_window[i]
           month_start_date <- sub_data_month[[i]]$`Measured At`[which.min(sub_data_month[[i]]$`Measured At`)]
           current_month_median <- median(sub_data_month[[i]]$Median, na.rm = TRUE)
           current_month_results <- sum(!is.na(sub_data_month[[i]]$Median))
@@ -267,7 +267,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
       else if(measure == "hyper"){
         if(valid_windows_month[i] & valid_windows_year[i]){
 
-          current_date <- sub_data_month[[i]]$`Measured At`[which.max(sub_data_month[[i]]$`Measured At`)]
+          current_date <- bias_month_warning_end_window[i]
           month_start_date <- sub_data_month[[i]]$`Measured At`[which.min(sub_data_month[[i]]$`Measured At`)]
           current_month_median <- median(sub_data_month[[i]]$`Hyper Percentage`, na.rm = TRUE)
           current_month_results <- sum(!is.na(sub_data_month[[i]]$`Hyper Percentage`))
@@ -303,7 +303,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
       else if(measure == "hypo"){
         if(valid_windows_month[i] & valid_windows_year[i]){
 
-          current_date <- sub_data_month[[i]]$`Measured At`[which.max(sub_data_month[[i]]$`Measured At`)]
+          current_date <- bias_month_warning_end_window[i]
           month_start_date <- sub_data_month[[i]]$`Measured At`[which.min(sub_data_month[[i]]$`Measured At`)]
           current_month_median <- median(sub_data_month[[i]]$`Hypo Percentage`, na.rm = TRUE)
           current_month_results <- sum(!is.na(sub_data_month[[i]]$`Hypo Percentage`))
@@ -391,7 +391,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
     output <- lapply(1:length(valid_windows_month), FUN = function(i){
       if(measure == "median"){
         if(valid_windows_month[i] & valid_windows_month_peer_group[i]){
-          current_date <- sub_data_month[[i]]$`Measured At`[which.max(sub_data_month[[i]]$`Measured At`)]
+          current_date <- bias_month_warning_end_window[i]
           month_start_date <- sub_data_month[[i]]$`Measured At`[which.min(sub_data_month[[i]]$`Measured At`)]
           current_month_median <- median(sub_data_month[[i]]$Median, na.rm = TRUE)
           current_month_results <- sum(!is.na(sub_data_month[[i]]$Median))
@@ -427,7 +427,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
       else if(measure == "hyper"){
         if(valid_windows_month[i] & valid_windows_month_peer_group[i]){
 
-          current_date <- sub_data_month[[i]]$`Measured At`[which.max(sub_data_month[[i]]$`Measured At`)]
+          current_date <- bias_month_warning_end_window[i]
           month_start_date <- sub_data_month[[i]]$`Measured At`[which.min(sub_data_month[[i]]$`Measured At`)]
           current_month_median <- median(sub_data_month[[i]]$`Hyper Percentage`, na.rm = TRUE)
           current_month_results <- sum(!is.na(sub_data_month[[i]]$`Hyper Percentage`))
@@ -463,7 +463,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
       else if(measure == "hypo"){
         if(valid_windows_month[i] & valid_windows_month_peer_group[i]){
 
-          current_date <- sub_data_month[[i]]$`Measured At`[which.max(sub_data_month[[i]]$`Measured At`)]
+          current_date <- bias_month_warning_end_window[i]
           month_start_date <- sub_data_month[[i]]$`Measured At`[which.min(sub_data_month[[i]]$`Measured At`)]
           current_month_median <- median(sub_data_month[[i]]$`Hypo Percentage`, na.rm = TRUE)
           current_month_results <- sum(!is.na(sub_data_month[[i]]$`Hypo Percentage`))

@@ -1,5 +1,21 @@
 {
     "debugBreakpointsState": {
-        "breakpoints": []
+        "breakpoints": [
+            {
+                "id": 0,
+                "path": "~/nopam.smoothing/R/simulate_warning_process_x.R",
+                "line_number": 26,
+                "function_steps": "2",
+                "function_name": "xwarning_process0",
+                "state": 1,
+                "editor_state": 1,
+                "editor_line_number": 26,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": true,
+                "package_name": "nopam.smoothing"
+            }
+        ]
     }
 }
