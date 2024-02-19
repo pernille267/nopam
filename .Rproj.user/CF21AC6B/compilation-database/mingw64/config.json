@@ -1,0 +1,26 @@
+{
+    "args": [
+        "-std=gnu++17",
+        "-IC:/PROGRA~1/R/R-43~1.1/include",
+        "-DNDEBUG",
+        "-fopenmp",
+        "-IC:/PROGRA~1/R/R-43~1.1/library/Rcpp/include",
+        "-IC:/PROGRA~1/R/R-43~1.1/library/RCPPAR~1/include",
+        "-DEIGEN_DONT_VECTORIZE",
+        "-nostdinc",
+        "-Ic:/rtools43/x86_64~1.pos/bin/../lib/gcc/x86_64-w64-mingw32.static.posix/12.2.0/include/c++",
+        "-Ic:/rtools43/x86_64~1.pos/bin/../lib/gcc/x86_64-w64-mingw32.static.posix/12.2.0/include/c++/x86_64-w64-mingw32.static.posix",
+        "-Ic:/rtools43/x86_64~1.pos/bin/../lib/gcc/x86_64-w64-mingw32.static.posix/12.2.0/include/c++/backward",
+        "-Ic:/rtools43/x86_64~1.pos/bin/../lib/gcc/x86_64-w64-mingw32.static.posix/12.2.0/include",
+        "-Ic:/rtools43/x86_64~1.pos/bin/../lib/gcc/x86_64-w64-mingw32.static.posix/12.2.0/../../../../include",
+        "-Ic:/rtools43/x86_64~1.pos/bin/../lib/gcc/x86_64-w64-mingw32.static.posix/12.2.0/include-fixed",
+        "-include",
+        "C:/Program Files/R/R-4.3.1/nopam.smoothing/.Rproj.user/CF21AC6B/compilation-database/mingw64/cpp-definitions.h"
+    ],
+    "pch": "RcppArmadillo",
+    "is_cpp": true,
+    "hash": "170833375317081020841708102084",
+    "compiler": "6762244524107556826",
+    "rversion": "4.3.1",
+    "dbversion": 4
+}

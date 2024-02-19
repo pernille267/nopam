@@ -1,0 +1,5 @@
+useDynLib(nopam.smoothing, .registration=TRUE)
+importFrom(Rcpp, evalCpp)
+importFrom("stats", "median", "sd", "var")
+import(data.table)
+exportPattern("^[[:alpha:]]+")

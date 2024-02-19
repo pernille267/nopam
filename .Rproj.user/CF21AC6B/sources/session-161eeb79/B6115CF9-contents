@@ -1,0 +1,14 @@
+Package: nopam.smoothing
+Type: Package
+Title: Crazy No Pang Bang Smoothing Warning
+Version: 1.0
+Date: 2024-02-16
+Author: Ms. Pernille Kjeilen Fauskanger
+Maintainer: Ms. Pernille Kjeilen Fauskanger <pernille.fauskanger@noklus.no>
+Description: A workhorse that does all the work. You do not have to pay it to do stuff.
+License: AGPL (>= 3)
+Imports:
+  Rcpp (>= 1.0.11),
+  data.table
+LinkingTo: Rcpp, RcppArmadillo
+RoxygenNote: 7.2.3

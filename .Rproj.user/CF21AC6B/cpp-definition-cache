@@ -1,0 +1,194 @@
+[
+    {
+        "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/laks.cpp",
+        "file_last_write": 1708101174.0,
+        "definitions": [
+            {
+                "usr": "c:@F@gaussian_kernel#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "gaussian_kernel(double)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/laks.cpp",
+                "line": 5,
+                "column": 8,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@laks_gradients#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "laks_gradients(Rcpp::NumericVector, Rcpp::NumericVector)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/laks.cpp",
+                "line": 10,
+                "column": 15,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@laks#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#d#d#d#b#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "laks(Rcpp::NumericVector, Rcpp::NumericVector, double, double, double, bool)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/laks.cpp",
+                "line": 49,
+                "column": 6,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@laks_loo#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "laks_loo(Rcpp::NumericVector, Rcpp::NumericVector, double)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/laks.cpp",
+                "line": 169,
+                "column": 8,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    },
+    {
+        "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/llks.cpp",
+        "file_last_write": 1708101914.0,
+        "definitions": [
+            {
+                "usr": "c:@F@gaussian_kernel_1#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "gaussian_kernel_1(double)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/llks.cpp",
+                "line": 6,
+                "column": 8,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@weight_function_r#$@N@std@S@vector>#d#$@N@std@S@allocator>#d#S0_#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "weight_function_r(std::vector<double>, std::vector<double>, int)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/llks.cpp",
+                "line": 11,
+                "column": 8,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@llks_gradients#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "llks_gradients(Rcpp::NumericVector, Rcpp::NumericVector)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/llks.cpp",
+                "line": 21,
+                "column": 15,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@llks#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#d#d#d#b#b#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "llks(Rcpp::NumericVector, Rcpp::NumericVector, double, double, double, bool, bool)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/llks.cpp",
+                "line": 60,
+                "column": 6,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    },
+    {
+        "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/moving_median.cpp",
+        "file_last_write": 1708102383.0,
+        "definitions": [
+            {
+                "usr": "c:@F@moving_median#$@N@Rcpp@S@Vector>#VI14#@N@Rcpp@ST>1#T@PreserveStorage#S0_#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "moving_median(Rcpp::NumericVector, Rcpp::NumericVector, int)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/moving_median.cpp",
+                "line": 26,
+                "column": 6,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    },
+    {
+        "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/rcpparma_hello_world.cpp",
+        "file_last_write": 1708102084.0,
+        "definitions": [
+            {
+                "usr": "c:@F@rcpparma_hello_world#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "rcpparma_hello_world",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/rcpparma_hello_world.cpp",
+                "line": 18,
+                "column": 11,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@rcpparma_outerproduct#&1$@N@arma@S@Col>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "rcpparma_outerproduct(const arma::colvec &)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/rcpparma_hello_world.cpp",
+                "line": 30,
+                "column": 11,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@rcpparma_innerproduct#&1$@N@arma@S@Col>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "rcpparma_innerproduct(const arma::colvec &)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/rcpparma_hello_world.cpp",
+                "line": 38,
+                "column": 8,
+                "hidden": false
+            },
+            {
+                "usr": "c:@F@rcpparma_bothproducts#&1$@N@arma@S@Col>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "rcpparma_bothproducts(const arma::colvec &)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/rcpparma_hello_world.cpp",
+                "line": 47,
+                "column": 12,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    },
+    {
+        "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/reduce_bias_warnings.cpp",
+        "file_last_write": 1708102664.0,
+        "definitions": [
+            {
+                "usr": "c:@F@reduce_bias_warnings#$@N@Rcpp@S@Vector>#VI10#@N@Rcpp@ST>1#T@PreserveStorage#I#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "reduce_bias_warnings(Rcpp::LogicalVector, int)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/reduce_bias_warnings.cpp",
+                "line": 25,
+                "column": 15,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    },
+    {
+        "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/reduce_slope_warnings.cpp",
+        "file_last_write": 1708102651.0,
+        "definitions": [
+            {
+                "usr": "c:@F@reduce_slope_warnings#$@N@Rcpp@S@Vector>#VI19#@N@Rcpp@ST>1#T@PreserveStorage#b#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "reduce_slope_warnings(Rcpp::List, bool)",
+                "file": "C:/Program Files/R/R-4.3.1/nopam.smoothing/src/reduce_slope_warnings.cpp",
+                "line": 26,
+                "column": 6,
+                "hidden": false
+            }
+        ],
+        "hidden": false
+    }
+]

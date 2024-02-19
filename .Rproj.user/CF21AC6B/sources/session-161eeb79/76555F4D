@@ -1,0 +1,26 @@
+{
+    "id": "76555F4D",
+    "path": "~/nopam.smoothing/src/reduce_slope_warnings.cpp",
+    "project_path": "src/reduce_slope_warnings.cpp",
+    "type": "cpp",
+    "hash": "3232759088",
+    "contents": "",
+    "dirty": false,
+    "created": 1708102520796.0,
+    "source_on_save": false,
+    "relative_order": 9,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "12,3",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1708102651,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1708102651034,
+    "read_only": false,
+    "read_only_alternatives": []
+}
