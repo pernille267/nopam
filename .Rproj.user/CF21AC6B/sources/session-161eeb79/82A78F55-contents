@@ -1,7 +1,0 @@
-useDynLib(smooth.commutability, .registration=TRUE)
-importFrom(Rcpp, evalCpp)
-import(data.table)
-import(splines)
-import(fasteqa)
-importFrom("stats", "optimise", "predict", "qt", "quantile", "smooth.spline")
-exportPattern("^[[:alpha:]]+")
