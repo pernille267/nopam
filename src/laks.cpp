@@ -2,8 +2,8 @@
 using namespace Rcpp;
 
 // Gaussian kernel function
-double gaussian_kernel(double x) {
-  return 1 / sqrt(2.0 * M_PI) * exp(-0.5 * x * x);
+double gaussian_kernel(double x1, double x2, double b) {
+  return (1.0 / sqrt(2.0 * M_PI * b)) * exp(-0.5 * pow(x1 - x2, 2.0) / pow(b, 2.0));
 }
 
 // Calculate gradients using second differences
@@ -32,6 +32,7 @@ NumericVector laks_gradients(NumericVector date, NumericVector smoothed_median){
 //' @param average A \code{double} representing the sample mean of relevant measurements. If set to below \code{0}, it will be calculated in this function instead.
 //' @param standard_deviation A \code{double} representing the sample standard deviation of relevant measurements. If set to below \code{0}, it will be calculated in this function instead.
 //' @param approximate A \code{logical} value. If set to \code{TRUE}, gradients are estimated via second differences. If set to \code{FALSE}, a plug-in estimator of the gradients is used.
+//' @param tol A \code{double} value. Minimum relative weight for observation to be included in calculation
 //'
 //' @description Local average kernel smoothing of a set of measure values
 //'
@@ -46,7 +47,7 @@ NumericVector laks_gradients(NumericVector date, NumericVector smoothed_median){
 //' }
 
 // [[Rcpp::export]]
-List laks(NumericVector date, NumericVector median, double bandwidth, double average = -0.00001, double standard_deviation = -0.00001, bool approximate = false){
+List laks(NumericVector date, NumericVector median, double bandwidth, double average = -0.00001, double standard_deviation = -0.00001, bool approximate = false, double tol = 0.01){
 
   // Obtain the number of valid values (i.e., not NA-values)
   int number_of_valid = 0;
@@ -94,19 +95,45 @@ List laks(NumericVector date, NumericVector median, double bandwidth, double ave
       double weight_total = 0.0;
       double weighted_sum_delta = 0.0;
       double weight_total_delta = 0.0;
+      double self_weight = gaussian_kernel(cleansed_date[i], cleansed_date[i], bandwidth);
+      double self_weight_delta = gaussian_kernel(cleansed_date[i], cleansed_date[i] + delta, bandwidth);
 
-      for (int j = 0; j < n; ++j) {
-        double self_weight = gaussian_kernel(0.0);
-        double weight = gaussian_kernel((cleansed_date[j] - cleansed_date[i]) / bandwidth);
-        double weight_delta = gaussian_kernel((cleansed_date[j] - (cleansed_date[i] + delta)) / bandwidth);
-        // Only consider weights >= 1%
-        if (weight/self_weight >= 0.01) {
-          weighted_sum_normalized += weight * normalized_median[j];
-          weighted_sum += weight * cleansed_median[j];
-          weight_total += weight;
-          weighted_sum_delta += weight_delta * normalized_median[j];
-          weight_total_delta += weight_delta;
+      weighted_sum_normalized += self_weight * normalized_median[i];
+      weighted_sum_delta += self_weight_delta * normalized_median[i];
+      weighted_sum += self_weight * cleansed_median[i];
+      weight_total += self_weight;
+      weight_total_delta += self_weight_delta;
+
+      // Lower points
+      for(int j = i - 1; j > -1; --j){
+        double weight = gaussian_kernel(cleansed_date[j], cleansed_date[i], bandwidth);
+        double weight_delta = gaussian_kernel(cleansed_date[j], cleansed_date[i] + delta, bandwidth);
+
+        if(weight / self_weight < tol){
+          break;
         }
+
+        weighted_sum_normalized += weight * normalized_median[j];
+        weighted_sum_delta += weight_delta * normalized_median[j];
+        weighted_sum += weight * cleansed_median[j];
+        weight_total += weight;
+        weight_total_delta += weight_delta;
+      }
+
+      // Upper points
+      for(int j = i + 1; j < n; ++j){
+        double weight = gaussian_kernel(cleansed_date[j], cleansed_date[i], bandwidth);
+        double weight_delta = gaussian_kernel(cleansed_date[j], cleansed_date[i] + delta, bandwidth);
+
+        if(weight / self_weight < tol){
+          break;
+        }
+
+        weighted_sum_normalized += weight * normalized_median[j];
+        weighted_sum_delta += weight_delta * normalized_median[j];
+        weighted_sum += weight * cleansed_median[j];
+        weight_total += weight;
+        weight_total_delta += weight_delta;
       }
 
       normalized_smoothed_median[i] = weighted_sum_normalized / weight_total;
@@ -123,18 +150,37 @@ List laks(NumericVector date, NumericVector median, double bandwidth, double ave
       double weighted_sum_normalized = 0.0;
       double weighted_sum = 0.0;
       double weight_total = 0.0;
+      double self_weight = gaussian_kernel(cleansed_date[i], cleansed_date[i], bandwidth);
 
-      for (int j = 0; j < n; ++j) {
-        double self_weight = gaussian_kernel(0.0);
-        double weight = gaussian_kernel((cleansed_date[j] - cleansed_date[i]) / bandwidth);
-        // Only consider weights >= 1%
-        if (weight/self_weight >= 0.01) {
-          weighted_sum_normalized += weight * normalized_median[j];
-          weighted_sum += weight * cleansed_median[j];
-          weight_total += weight;
+      weighted_sum_normalized += self_weight * normalized_median[i];
+      weighted_sum += self_weight * cleansed_median[i];
+      weight_total += self_weight;
+
+      // Lower points
+      for(int j = i - 1; j > -1; --j){
+        double weight = gaussian_kernel(cleansed_date[j], cleansed_date[i], bandwidth);
+
+        if(weight / self_weight < tol){
+          break;
         }
+
+        weighted_sum_normalized += weight * normalized_median[j];
+        weighted_sum += weight * cleansed_median[j];
+        weight_total += weight;
       }
 
+      // Upper points
+      for(int j = i + 1; j < n; ++j){
+        double weight = gaussian_kernel(cleansed_date[j], cleansed_date[i], bandwidth);
+
+        if(weight / self_weight < tol){
+          break;
+        }
+
+        weighted_sum_normalized += weight * normalized_median[j];
+        weighted_sum += weight * cleansed_median[j];
+        weight_total += weight;
+      }
       normalized_smoothed_median[i] = weighted_sum_normalized / weight_total;
       smoothed_median[i] = weighted_sum / weight_total;
     }
@@ -177,8 +223,8 @@ double laks_loo(NumericVector date, NumericVector median, double bandwidth) {
     double i_weight = 0;
     double i_median = 0;
     for (int j = 0; j < n; ++j) {
-      double self_weight = gaussian_kernel(0.0);
-      double weight = gaussian_kernel((date[j] - date[i]) / bandwidth);
+      double self_weight = gaussian_kernel(date[i], date[i], bandwidth);
+      double weight = gaussian_kernel(date[j], date[i], bandwidth);
       // Only consider weights >= 1%
       if (weight/self_weight >= 0.01){
         if(i==j){

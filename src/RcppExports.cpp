@@ -12,8 +12,8 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // laks
-List laks(NumericVector date, NumericVector median, double bandwidth, double average, double standard_deviation, bool approximate);
-RcppExport SEXP _nopam_smoothing_laks(SEXP dateSEXP, SEXP medianSEXP, SEXP bandwidthSEXP, SEXP averageSEXP, SEXP standard_deviationSEXP, SEXP approximateSEXP) {
+List laks(NumericVector date, NumericVector median, double bandwidth, double average, double standard_deviation, bool approximate, double tol);
+RcppExport SEXP _nopam_smoothing_laks(SEXP dateSEXP, SEXP medianSEXP, SEXP bandwidthSEXP, SEXP averageSEXP, SEXP standard_deviationSEXP, SEXP approximateSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,7 +23,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type average(averageSEXP);
     Rcpp::traits::input_parameter< double >::type standard_deviation(standard_deviationSEXP);
     Rcpp::traits::input_parameter< bool >::type approximate(approximateSEXP);
-    rcpp_result_gen = Rcpp::wrap(laks(date, median, bandwidth, average, standard_deviation, approximate));
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(laks(date, median, bandwidth, average, standard_deviation, approximate, tol));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -139,7 +140,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_nopam_smoothing_laks", (DL_FUNC) &_nopam_smoothing_laks, 6},
+    {"_nopam_smoothing_laks", (DL_FUNC) &_nopam_smoothing_laks, 7},
     {"_nopam_smoothing_laks_loo", (DL_FUNC) &_nopam_smoothing_laks_loo, 3},
     {"_nopam_smoothing_llks", (DL_FUNC) &_nopam_smoothing_llks, 7},
     {"_nopam_smoothing_moving_median", (DL_FUNC) &_nopam_smoothing_moving_median, 3},

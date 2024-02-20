@@ -12,6 +12,7 @@
 #' @param average A \code{double} representing the sample mean of relevant measurements. If set to below \code{0}, it will be calculated in this function instead.
 #' @param standard_deviation A \code{double} representing the sample standard deviation of relevant measurements. If set to below \code{0}, it will be calculated in this function instead.
 #' @param approximate A \code{logical} value. If set to \code{TRUE}, gradients are estimated via second differences. If set to \code{FALSE}, a plug-in estimator of the gradients is used.
+#' @param tol A \code{double} value. Minimum relative weight for observation to be included in calculation
 #'
 #' @description Local average kernel smoothing of a set of measure values
 #'
@@ -48,8 +49,8 @@ NULL
 #' }
 NULL
 
-laks <- function(date, median, bandwidth, average = -0.00001, standard_deviation = -0.00001, approximate = FALSE) {
-    .Call(`_nopam_smoothing_laks`, date, median, bandwidth, average, standard_deviation, approximate)
+laks <- function(date, median, bandwidth, average = -0.00001, standard_deviation = -0.00001, approximate = FALSE, tol = 0.01) {
+    .Call(`_nopam_smoothing_laks`, date, median, bandwidth, average, standard_deviation, approximate, tol)
 }
 
 laks_loo <- function(date, median, bandwidth) {
