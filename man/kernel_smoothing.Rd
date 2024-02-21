@@ -14,7 +14,8 @@ kernel_smoothing(
   standard_deviation = 1,
   attach = TRUE,
   approximate = TRUE,
-  matrix_approach = TRUE
+  matrix_approach = TRUE,
+  na_rm = TRUE
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ kernel_smoothing(
 \item{approximate}{A \code{logical} value. If set to \code{TRUE}, second differences are used to estimate gradients. If \code{FALSE} other methods are utilized.}
 
 \item{matrix_approach}{A \code{logical} value. Should matrix calculus be used to smooth. Only relevant if \code{method} is \code{ll}. Matrix calculus is faster, but may not be stable in some cases.}
+
+\item{na_rm}{A \code{logical} value. Should rows with missing measurements be stripped from the output?}
 }
 \value{
 A \code{data.table} containing the smoothed values for multiple instruments within multiple laboratories

@@ -11,6 +11,7 @@
 ~%2Fnopam.smoothing%2Fman%2Fnopam.smoothing-package.Rd="18CCC100"
 ~%2Fnopam.smoothing%2Fsrc%2FRcppExports.cpp="F41044B5"
 ~%2Fnopam.smoothing%2Fsrc%2Flaks.cpp="707DCC70"
+~%2Fnopam.smoothing%2Fsrc%2Fllks.cpp="0BE7E00F"
 ~%2Fnopam.smoothing%2Fsrc%2Fmoving_median.cpp="C31823A9"
 ~%2Fnopam.smoothing%2Fsrc%2Frcpparma_hello_world.cpp="47FCC481"
 ~%2Fnopam.smoothing%2Fsrc%2Freduce_bias_warnings.cpp="600E1E9D"

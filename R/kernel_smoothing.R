@@ -209,12 +209,13 @@ kernel_smoothing0 <- function(data, method = "lc", measure = c("median", "hyper"
 #' @param attach A \code{logical} value. Should we attach the information found in \code{data} to the output?
 #' @param approximate A \code{logical} value. If set to \code{TRUE}, second differences are used to estimate gradients. If \code{FALSE} other methods are utilized.
 #' @param matrix_approach A \code{logical} value. Should matrix calculus be used to smooth. Only relevant if \code{method} is \code{ll}. Matrix calculus is faster, but may not be stable in some cases.
+#' @param na_rm A \code{logical} value. Should rows with missing measurements be stripped from the output?
 #'
 #' @return A \code{data.table} containing the smoothed values for multiple instruments within multiple laboratories
 #' @export
 #'
 #' @examples print(1)
-kernel_smoothing <- function(data, by, method = "lc", measure = c("median", "hyper", "hypo"), bw = 11, average = 0, standard_deviation = 1, attach = TRUE, approximate = TRUE, matrix_approach = TRUE){
+kernel_smoothing <- function(data, by, method = "lc", measure = c("median", "hyper", "hypo"), bw = 11, average = 0, standard_deviation = 1, attach = TRUE, approximate = TRUE, matrix_approach = TRUE, na_rm = TRUE){
   `Median` <- NULL
   measure <- measure[1]
   ksc <- kernel_smoothing_check(data = data, by = by, measure = measure, only_acceptable = TRUE)
@@ -243,6 +244,6 @@ kernel_smoothing <- function(data, by, method = "lc", measure = c("median", "hyp
     data <- merge(data, average_and_standard_deviation, by = by)
   }
 
-  output <- data[, kernel_smoothing0(.SD, method = method, measure = measure, bw = bw, attach = attach, average = average, standard_deviation = standard_deviation, approximate = approximate, matrix_approach = matrix_approach), by = by]
+  output <- data[, kernel_smoothing0(.SD, method = method, measure = measure, bw = bw, attach = attach, average = average, standard_deviation = standard_deviation, approximate = approximate, matrix_approach = matrix_approach, na_rm = na_rm), by = by]
   return(output)
 }

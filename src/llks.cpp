@@ -42,6 +42,7 @@ NumericVector llks_gradients(NumericVector date, NumericVector smoothed_median){
 //' @param standard_deviation A \code{double} representing the sample standard deviation of relevant measurements. If set to below \code{0}, it will be calculated in this function instead.
 //' @param approximate A \code{logical} value. If set to \code{TRUE}, gradients are estimated via second differences. If set to \code{FALSE}, a plug-in estimator of the gradients is used.
 //' @param matrix_approach A \code{loigcal} value. Should matrix calculus be used to smooth. Only relevant if \code{method} is \code{ll}. Matrix calculus is faster, but may not be stable in some cases.
+//' @param tol A \code{double} value. Minimum relative weight for observation to be included in calculation
 //'
 //' @description Local linear kernel smoothing of a set of measure values
 //'
@@ -57,7 +58,7 @@ NumericVector llks_gradients(NumericVector date, NumericVector smoothed_median){
 
 // Local linear kernel smoothing function
 // [[Rcpp::export]]
-List llks(NumericVector date, NumericVector median, double bandwidth = 11, double average = -0.00001, double standard_deviation = -0.00001, bool approximate = false, bool matrix_approach = true){
+List llks(NumericVector date, NumericVector median, double bandwidth = 11, double average = -0.00001, double standard_deviation = -0.00001, bool approximate = false, bool matrix_approach = true, double tol = 0.01){
 
   int number_of_valid = 0;
   for(int i = 0; i < median.size(); ++i){
@@ -101,12 +102,11 @@ List llks(NumericVector date, NumericVector median, double bandwidth = 11, doubl
   if(matrix_approach){
     for(int i = 0; i < n; ++i){
       std::vector<double> weights, relevant_dates, relevant_medians, relevant_normalized_medians;
+      double self_weight = gaussian_kernel_1(0.0);
       for (int j = 0; j < n; ++j) {
-        double self_weight = gaussian_kernel_1(0.0);
         double weight = gaussian_kernel_1((cleansed_date[j] - cleansed_date[i]) / bandwidth);
-
         // Only consider weights >= 1%
-        if(weight/self_weight >= 0.01){
+        if(weight / self_weight >= tol){
           weights.push_back(weight);
           relevant_dates.push_back(cleansed_date[j]);
           relevant_medians.push_back(cleansed_median[j]);
@@ -168,7 +168,7 @@ List llks(NumericVector date, NumericVector median, double bandwidth = 11, doubl
         double self_weight = gaussian_kernel_1(0.0);
         double weight = gaussian_kernel_1((cleansed_date[j] - cleansed_date[i]) / bandwidth);
         // Only consider weights >= 1%
-        if(weight/self_weight >= 0.01){
+        if(weight/self_weight >= tol){
           weights.push_back(weight);
           relevant_dates.push_back(cleansed_date[j]);
           relevant_medians.push_back(cleansed_median[j]);

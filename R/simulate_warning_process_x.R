@@ -120,7 +120,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           }
           current_kernel_smoothed <- kernel_smoothing0(data = sub_data[[i]], method = method, measure = measure, bw = bw1, average = current_average[i], standard_deviation = current_sd[i], attach = "x", approximate = approximate, matrix_approach = TRUE, diagnostics = TRUE, na_rm = FALSE)
           current_kernel_smoothed_cleansed <- current_kernel_smoothed[!is.na(m), ]
-          current_date <- current_kernel_smoothed$`Measured At`[which.max(current_kernel_smoothed$`Measured At`)]
+          current_date <- slope_warning_end_window[i]
           evaluated_ids <- order(current_kernel_smoothed_cleansed$`Measured At`, decreasing = TRUE)[2:(dur + 1)]
           evaluated_slopes <- current_kernel_smoothed_cleansed$`Smoothed Gradient Degrees`[evaluated_ids]
           evaluated_days <- current_kernel_smoothed_cleansed$`Measured At`[evaluated_ids]
@@ -150,7 +150,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
         if(valid_windows[i]){
           current_kernel_smoothed <- kernel_smoothing0(data = sub_data[[i]], method = method, measure = measure, bw = bw1, average = 0, standard_deviation = 1, attach = "x", approximate = approximate, matrix_approach = TRUE, diagnostics = TRUE, na_rm = FALSE)
           current_kernel_smoothed_cleansed <- current_kernel_smoothed[!is.na(m), ]
-          current_date <- current_kernel_smoothed$`Measured At`[which.max(current_kernel_smoothed$`Measured At`)]
+          current_date <- slope_warning_end_window[i]
           evaluated_ids <- order(current_kernel_smoothed_cleansed$`Measured At`, decreasing = TRUE)[2:(dur + 1)]
           evaluated_slopes <- current_kernel_smoothed_cleansed$`Smoothed Gradient Degrees`[evaluated_ids]
           evaluated_days <- current_kernel_smoothed_cleansed$`Measured At`[evaluated_ids]

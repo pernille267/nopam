@@ -17,6 +17,8 @@
 \item{approximate}{A \code{logical} value. If set to \code{TRUE}, gradients are estimated via second differences. If set to \code{FALSE}, a plug-in estimator of the gradients is used.}
 
 \item{matrix_approach}{A \code{loigcal} value. Should matrix calculus be used to smooth. Only relevant if \code{method} is \code{ll}. Matrix calculus is faster, but may not be stable in some cases.}
+
+\item{tol}{A \code{double} value. Minimum relative weight for observation to be included in calculation}
 }
 \value{
 A \code{list} containing kernel smoothed values.

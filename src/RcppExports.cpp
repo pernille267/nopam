@@ -42,8 +42,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // llks
-List llks(NumericVector date, NumericVector median, double bandwidth, double average, double standard_deviation, bool approximate, bool matrix_approach);
-RcppExport SEXP _nopam_smoothing_llks(SEXP dateSEXP, SEXP medianSEXP, SEXP bandwidthSEXP, SEXP averageSEXP, SEXP standard_deviationSEXP, SEXP approximateSEXP, SEXP matrix_approachSEXP) {
+List llks(NumericVector date, NumericVector median, double bandwidth, double average, double standard_deviation, bool approximate, bool matrix_approach, double tol);
+RcppExport SEXP _nopam_smoothing_llks(SEXP dateSEXP, SEXP medianSEXP, SEXP bandwidthSEXP, SEXP averageSEXP, SEXP standard_deviationSEXP, SEXP approximateSEXP, SEXP matrix_approachSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -54,7 +54,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type standard_deviation(standard_deviationSEXP);
     Rcpp::traits::input_parameter< bool >::type approximate(approximateSEXP);
     Rcpp::traits::input_parameter< bool >::type matrix_approach(matrix_approachSEXP);
-    rcpp_result_gen = Rcpp::wrap(llks(date, median, bandwidth, average, standard_deviation, approximate, matrix_approach));
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(llks(date, median, bandwidth, average, standard_deviation, approximate, matrix_approach, tol));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -142,7 +143,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_nopam_smoothing_laks", (DL_FUNC) &_nopam_smoothing_laks, 7},
     {"_nopam_smoothing_laks_loo", (DL_FUNC) &_nopam_smoothing_laks_loo, 3},
-    {"_nopam_smoothing_llks", (DL_FUNC) &_nopam_smoothing_llks, 7},
+    {"_nopam_smoothing_llks", (DL_FUNC) &_nopam_smoothing_llks, 8},
     {"_nopam_smoothing_moving_median", (DL_FUNC) &_nopam_smoothing_moving_median, 3},
     {"_nopam_smoothing_rcpparma_hello_world", (DL_FUNC) &_nopam_smoothing_rcpparma_hello_world, 0},
     {"_nopam_smoothing_rcpparma_outerproduct", (DL_FUNC) &_nopam_smoothing_rcpparma_outerproduct, 1},

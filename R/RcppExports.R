@@ -69,6 +69,7 @@ laks_loo <- function(date, median, bandwidth) {
 #' @param standard_deviation A \code{double} representing the sample standard deviation of relevant measurements. If set to below \code{0}, it will be calculated in this function instead.
 #' @param approximate A \code{logical} value. If set to \code{TRUE}, gradients are estimated via second differences. If set to \code{FALSE}, a plug-in estimator of the gradients is used.
 #' @param matrix_approach A \code{loigcal} value. Should matrix calculus be used to smooth. Only relevant if \code{method} is \code{ll}. Matrix calculus is faster, but may not be stable in some cases.
+#' @param tol A \code{double} value. Minimum relative weight for observation to be included in calculation
 #'
 #' @description Local linear kernel smoothing of a set of measure values
 #'
@@ -83,8 +84,8 @@ laks_loo <- function(date, median, bandwidth) {
 #' }
 NULL
 
-llks <- function(date, median, bandwidth = 11, average = -0.00001, standard_deviation = -0.00001, approximate = FALSE, matrix_approach = TRUE) {
-    .Call(`_nopam_smoothing_llks`, date, median, bandwidth, average, standard_deviation, approximate, matrix_approach)
+llks <- function(date, median, bandwidth = 11, average = -0.00001, standard_deviation = -0.00001, approximate = FALSE, matrix_approach = TRUE, tol = 0.01) {
+    .Call(`_nopam_smoothing_llks`, date, median, bandwidth, average, standard_deviation, approximate, matrix_approach, tol)
 }
 
 #' Moving Median Smoothing Method

@@ -9,7 +9,8 @@ Description: A workhorse that does all the work. You do not have to pay it to do
 License: AGPL (>= 3)
 Imports:
   Rcpp (>= 1.0.11),
-  data.table
+  data.table,
+  np
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.2.3
 Suggests: 

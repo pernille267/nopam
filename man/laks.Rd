@@ -15,6 +15,8 @@
 \item{standard_deviation}{A \code{double} representing the sample standard deviation of relevant measurements. If set to below \code{0}, it will be calculated in this function instead.}
 
 \item{approximate}{A \code{logical} value. If set to \code{TRUE}, gradients are estimated via second differences. If set to \code{FALSE}, a plug-in estimator of the gradients is used.}
+
+\item{tol}{A \code{double} value. Minimum relative weight for observation to be included in calculation}
 }
 \value{
 A \code{list} containing kernel smoothed values.

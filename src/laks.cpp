@@ -3,7 +3,8 @@ using namespace Rcpp;
 
 // Gaussian kernel function
 double gaussian_kernel(double x1, double x2, double b) {
-  return (1.0 / sqrt(2.0 * M_PI * b)) * exp(-0.5 * pow(x1 - x2, 2.0) / pow(b, 2.0));
+  //return (1.0 / sqrt(2.0 * M_PI * b)) * exp(-0.5 * pow(x1 - x2, 2.0) / pow(b, 2.0));
+  return (1.0 / sqrt(2.0 * M_PI)) * exp(-pow(x1 - x2, 2.0) / (2.0 * pow(b, 2.0)));
 }
 
 // Calculate gradients using second differences
