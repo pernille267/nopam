@@ -1,6 +1,7 @@
 useDynLib(nopam.smoothing, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
-importFrom("stats", "median", "sd", "var")
+importFrom("stats", "quantile", "median", "sd", "var")
 import(data.table)
+import(ggplot2)
 import(np)
 exportPattern("^[[:alpha:]]+")

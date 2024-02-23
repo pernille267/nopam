@@ -45,7 +45,7 @@ xwarning_process(
 
 \item{bw1}{A \code{double}. The bandwidth used for the kernel smoothing. Typically set to 11.}
 
-\item{bw2}{A \code{double}. The bandwidth used for monthly moving median. Typically set to 30.}
+\item{bw2}{A \code{double}. The bandwidth used for monthly moving median and the monthly median for peer group data. Typically set to 30.}
 
 \item{bw3}{A \code{double}. The bandwidth used for yearly moving median. Typically set to 365.}
 

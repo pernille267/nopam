@@ -21,9 +21,9 @@ kernel_smoothing0 <- function(data, method = "lc", measure = c("median", "hyper"
   `m` <- `Median` <- `Hyper Percentage` <- `Hypo Percentage` <- NULL
   # Get measure (can be median, hyper or hypo)
   measure <- measure[1]
-  # Convert from "Date" class to "numeric" class.
+  # Convert from "IDate" class to "numeric" class. First date is set to 1, and the remaining dates gets similar representation
   data$date <- as.numeric(data$`Measured At` - min(data$`Measured At`, na.rm = TRUE)) + 1
-  # Detect NA-values in the dates, which are removed later
+  # Detect NA-values in the dates, which are removed later. It is untypical with NA-values in the date column!
   date_NAs <- which(is.na(data$date))
   # Initialize output names
   smooth_name <- ""
@@ -67,20 +67,20 @@ kernel_smoothing0 <- function(data, method = "lc", measure = c("median", "hyper"
     else{
       # If both 'average' >= 0 and 'standard_deviation' > 0 (spans the default settings), we use these values!
       if(isTRUE(average >= 0 && standard_deviation > 0)){
-        kernel_smoothed <- laks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = average, standard_deviation = standard_deviation, approximate = approximate)
+        kernel_smoothed <- laks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = average, standard_deviation = standard_deviation, approximate = approximate, tol = 0.01)
       }
       # If at least one of 'average' and 'standard_deviation' < 0, 'average' and 'standard_deviation' should be calculated in the laks() function! Negative values for these in the laks() function trigger their calculations.
       else if(isTRUE(average < 0 || standard_deviation < 0)){
         # If we consider hyper / hypo values, we do not wish to calculate 'average' and 'standard_deviation' inside laks(), as they will always be 0 and 1 in these cases.
         if(measure == "hyper" || measure == "hypo"){
-          kernel_smoothed <- laks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = 0, standard_deviation = 1, approximate = approximate)
+          kernel_smoothed <- laks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = 0, standard_deviation = 1, approximate = approximate, tol = 0.01)
         }
         # Last resort!
         else{
           if(diagnostics){
             cat("Average and standard deviation not found in data, and are calculated via the laks() function!", "\n")
           }
-          kernel_smoothed <- laks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = -1, standard_deviation = -1, approximate = approximate)
+          kernel_smoothed <- laks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = -1, standard_deviation = -1, approximate = approximate, tol = 0.01)
         }
 
       }
@@ -88,7 +88,7 @@ kernel_smoothing0 <- function(data, method = "lc", measure = c("median", "hyper"
         if(diagnostics){
           cat("Average and standard deviation not found in data. If this is not intentional, you should have a closer look", "\n")
         }
-        kernel_smoothed <- laks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = 0, standard_deviation = 1, approximate = approximate)
+        kernel_smoothed <- laks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = 0, standard_deviation = 1, approximate = approximate, tol = 0.01)
       }
 
     }
@@ -105,29 +105,29 @@ kernel_smoothing0 <- function(data, method = "lc", measure = c("median", "hyper"
     }
     if(nrow(sub_data) >= 1){
       if(all(c("average", "standard_deviation") %in% names(sub_data))){
-        kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = sub_data$average[1], standard_deviation = sub_data$standard_deviation[1], approximate = approximate, matrix_approach = matrix_approach)
+        kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = sub_data$average[1], standard_deviation = sub_data$standard_deviation[1], approximate = approximate, matrix_approach = matrix_approach, tol = 0.01)
       }
       # Try to handle the case when at leat one of 'average' and 'standard_deviation' cannot be found in 'sub_data'
       else{
         if(isTRUE(average >= 0 && standard_deviation > 0)){
-          kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = average, standard_deviation = standard_deviation, approximate = approximate, matrix_approach = matrix_approach)
+          kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = average, standard_deviation = standard_deviation, approximate = approximate, matrix_approach = matrix_approach, tol = 0.01)
         }
         else if(isTRUE(average < 0 || standard_deviation < 0)){
           if(measure == "hyper" || measure == "hypo"){
-            kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = 0, standard_deviation = 1, approximate = approximate, matrix_approach = matrix_approach)
+            kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = 0, standard_deviation = 1, approximate = approximate, matrix_approach = matrix_approach, tol = 0.01)
           }
           else{
             if(diagnostics){
               cat("Average and standard deviation not found in data, and are calculated via the llks() function!", "\n")
             }
-            kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = -1, standard_deviation = -1, approximate = approximate, matrix_approach = matrix_approach)
+            kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = -1, standard_deviation = -1, approximate = approximate, matrix_approach = matrix_approach, tol = 0.01)
           }
         }
         else{
           if(diagnostics){
             cat("Average and standard deviation not found in data. If this is not intentional, you should have a closer look", "\n")
           }
-          kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = 0, standard_deviation = 1, approximate = approximate, matrix_approach = matrix_approach)
+          kernel_smoothed <- llks(date = sub_data$date, median = sub_data$m, bandwidth = bw, average = 0, standard_deviation = 1, approximate = approximate, matrix_approach = matrix_approach, tol = 0.01)
         }
 
       }

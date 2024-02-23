@@ -1,6 +1,6 @@
 library(data.table)
 library(nopam.smoothing)
-library(np)
+library(np, quietly = TRUE)
 
 # Load data
 alkaline <- fread(file = "~/nopam_warnings/alkaline-phosphatase-from-2021-01-01-to-2023-01-01-raw.csv") |> expand_data()
@@ -57,4 +57,3 @@ test_that(desc = "Test second differences slopes with npreg", code = {
   expect_equal(object = actual_lc_4$gradients, expected = sd_gradients_lc, tolerance = 1e-1)
   expect_equal(object = actual_ll_4$gradients, expected = sd_gradients_ll, tolerance = 1e-1)
 })
-

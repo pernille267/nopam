@@ -30,7 +30,7 @@ xgenerate_warnings(
 
 \item{to}{A \code{IDate} value. The end of the warning process, i.e., the last date where a warning is calculated.}
 
-\item{method}{A \code{character} signifying which smoothing method that is used for the slope warnings. Valid options include \code{lc} (Local-Average kernel smoothing) and \code{ll} (Local-Linear kernel smoothing).}
+\item{method}{A \code{character} signifying which kernel smoothing method that is used for the slope warnings. Valid options include \code{lc} (Local-Average kernel smoothing) and \code{ll} (Local-Linear kernel smoothing).}
 
 \item{tol_median_slope}{A \code{double} value. What is the warning threshold for the median slope warning?}
 
@@ -46,18 +46,19 @@ xgenerate_warnings(
 
 \item{tol_pg}{A \code{double} value. What is the warning threshold for the median peer group bias warning?}
 
-\item{dur}{A \code{integer} value. How many days must the gradient be above the threshold given in \code{tol} in order to trigger a slope warning. Will be the same for all measures for the slope warning.}
+\item{dur}{An \code{integer} value. How many days must the gradient be above the threshold given in \code{tol} in order to trigger a slope warning. Will be the same for all measures for the slope warning. The default is \code{3}.}
 
-\item{bw1}{A \code{double}. The bandwidth used for the kernel smoothing. Typically set to 11.}
+\item{bw1}{A \code{double} value. The bandwidth used for the kernel smoothing. Typically set to 11.}
 
-\item{bw2}{A \code{double}. The bandwidth used for monthly moving median. Typically set to 30.}
+\item{bw2}{An \code{integer} value. The bandwidth used for monthly moving median and the monthly median for peer group data. Typically set to 30.}
 
-\item{bw3}{A \code{double}. The bandwidth used for yearly moving median. Typically set to 365.}
+\item{bw3}{An \code{integer} value. The bandwidth used for yearly moving median. Typically set to 365.}
 
 \item{only_warnings}{A \code{logical} value. If set to \code{TRUE}, only the dates with warnings generated are outputted. If set to \code{FALSE}, the whole process it outputted.}
 }
 \value{
-A \code{data.table} object containing the warning process information
+A \code{data.table} object containing the warning process information for each of the seven relevant warnings.
+The output columns for each type of warning may be slightly different, so the output \code{data.table} from this function will contain a lot for columns.
 }
 \description{
 Alternative Generation of All Warnings for All Instruments Within Each Laboratory

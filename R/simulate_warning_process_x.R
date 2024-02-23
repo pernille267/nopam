@@ -10,7 +10,7 @@
 #' @param tol A \code{double} value. What is the warning threshold for relevant \code{warning}?
 #' @param dur A \code{integer} value. How many days must the gradient be above the threshold given in \code{tol} in order to trigger a warning. Only relevant if \code{warning} is set to \code{slope}.
 #' @param bw1 A \code{double}. The bandwidth used for the kernel smoothing. Typically set to 11.
-#' @param bw2 A \code{double}. The bandwidth used for monthly moving median. Typically set to 30.
+#' @param bw2 A \code{double}. The bandwidth used for monthly moving median and the monthly median for peer group data. Typically set to 30.
 #' @param bw3 A \code{double}. The bandwidth used for yearly moving median. Typically set to 365.
 #' @param snooze A \code{integer} signifying the number of days recurring warnings are snoozed. Only relevant if \code{warning} is \code{bias} or \code{peer_group}. Set to \code{0} to disable snoozing.
 #' @param stringent_slope_warning A \code{logical} value. If set to \code{FALSE}, all triggered warnings are displayed. If set to \code{TRUE}, we avoid excessive number of warnings. See \code{?reduce_slope_warnings()} for more information. Only relevant if \code{warning} is set to \code{slope}.
@@ -136,7 +136,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           return(warning_data)
         }
         else{
-          warning_data <- data.table("Measured At" = as.IDate("2000-01-01"),
+          warning_data <- data.table("Measured At" = slope_warning_end_window[i],
                                      "Evaluated Slopes" = NA_character_,
                                      "Evaluated Days" = NA_character_,
                                      "Evaluated Average" = NA_real_,
@@ -166,7 +166,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           return(warning_data)
         }
         else{
-          warning_data <- data.table("Measured At" = as.IDate("2000-01-01"),
+          warning_data <- data.table("Measured At" = slope_warning_end_window[i],
                                      "Evaluated Slopes" = NA_character_,
                                      "Evaluated Days" = NA_character_,
                                      "Evaluated Average" = NA_real_,
@@ -252,7 +252,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           return(warning_data)
         }
         else{
-          warning_data <- data.table("Measured At" = as.IDate("2000-01-01"),
+          warning_data <- data.table("Measured At" = bias_month_warning_end_window[i],
                                      "Monthly Start Date" = as.IDate("2000-01-01"),
                                      "Monthly Median" = NA_real_,
                                      "Monthly Number of Results" = NA_integer_,
@@ -288,7 +288,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           return(warning_data)
         }
         else{
-          warning_data <- data.table("Measured At" = as.IDate("2000-01-01"),
+          warning_data <- data.table("Measured At" = bias_month_warning_end_window[i],
                                      "Monthly Start Date" = as.IDate("2000-01-01"),
                                      "Monthly Median" = NA_real_,
                                      "Monthly Number of Results" = NA_integer_,
@@ -324,7 +324,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           return(warning_data)
         }
         else{
-          warning_data <- data.table("Measured At" = as.IDate("2000-01-01"),
+          warning_data <- data.table("Measured At" = bias_month_warning_end_window[i],
                                      "Monthly Start Date" = as.IDate("2000-01-01"),
                                      "Monthly Median" = NA_real_,
                                      "Monthly Number of Results" = NA_integer_,
@@ -386,8 +386,6 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
     valid_windows_month <- sapply(X = sub_data_month, FUN = valid_peer_group_window, measure, simplify = TRUE)
     valid_windows_month_peer_group <- sapply(X = sub_data_month_peer_group, FUN = valid_peer_group_window, measure, simplify = TRUE)
 
-
-
     output <- lapply(1:length(valid_windows_month), FUN = function(i){
       if(measure == "median"){
         if(valid_windows_month[i] & valid_windows_month_peer_group[i]){
@@ -412,7 +410,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           return(warning_data)
         }
         else{
-          warning_data <- data.table("Measured At" = as.IDate("2000-01-01"),
+          warning_data <- data.table("Measured At" = bias_month_warning_end_window[i],
                                      "Monthly Start Date" = as.IDate("2000-01-01"),
                                      "Monthly Median" = NA_real_,
                                      "Monthly Number of Results" = NA_integer_,
@@ -448,7 +446,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           return(warning_data)
         }
         else{
-          warning_data <- data.table("Measured At" = as.IDate("2000-01-01"),
+          warning_data <- data.table("Measured At" = bias_month_warning_end_window[i],
                                      "Monthly Start Date" = as.IDate("2000-01-01"),
                                      "Monthly Median" = NA_real_,
                                      "Monthly Number of Results" = NA_integer_,
@@ -484,7 +482,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
           return(warning_data)
         }
         else{
-          warning_data <- data.table("Measured At" = as.IDate("2000-01-01"),
+          warning_data <- data.table("Measured At" = bias_month_warning_end_window[i],
                                      "Monthly Start Date" = as.IDate("2000-01-01"),
                                      "Monthly Median" = NA_real_,
                                      "Monthly Number of Results" = NA_integer_,
@@ -517,7 +515,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
 #' @param tol A \code{double} value. What is the warning threshold for relevant \code{warning}?
 #' @param dur A \code{integer} value. How many days must the gradient be above the threshold given in \code{tol} in order to trigger a warning. Only relevant if \code{warning} is set to \code{slope}.
 #' @param bw1 A \code{double}. The bandwidth used for the kernel smoothing. Typically set to 11.
-#' @param bw2 A \code{double}. The bandwidth used for monthly moving median. Typically set to 30.
+#' @param bw2 A \code{double}. The bandwidth used for monthly moving median and the monthly median for peer group data. Typically set to 30.
 #' @param bw3 A \code{double}. The bandwidth used for yearly moving median. Typically set to 365.
 #' @param snooze A \code{integer} signifying the number of days recurring warnings are snoozed. Only relevant if \code{warning} is \code{bias} or \code{peer_group}. Set to \code{0} to disable snoozing.
 #' @param stringent_slope_warning A \code{logical} value. If set to \code{FALSE}, all triggered warnings are displayed. If set to \code{TRUE}, we avoid excessive number of warnings. See \code{?reduce_slope_warnings()} for more information. Only relevant if \code{warning} is set to \code{slope}.
@@ -531,11 +529,15 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
 #' @examples print(1)
 xwarning_process <- function(data, by, from = "2021-12-31", to = "2022-12-30", measure = c("median", "hyper", "hypo"), method = c("lc", "ll"), warning = c("slope", "bias", "peer_group"), tol = 4, dur = 3, bw1 = 11, bw2 = 30, bw3 = 365, snooze = 0L, stringent_slope_warning = FALSE, attach = TRUE, approximate = TRUE, only_warnings = TRUE){
 
+  # Global variables need to be adressed here
   `Is Warning` <- NULL
 
+  # If a vector is given, just keep the first element
   measure <- measure[1]
   method <- method[1]
   warning <- warning[1]
+
+  # Set Peer group data to the data. Thus, it is important not to filter data!
   pg_data <- data
   output <- data[, xwarning_process0(data = .SD, pg_data = pg_data, from = from, to = to, measure = measure, method = method, warning = warning, tol = tol, dur = dur, bw1 = bw1, bw2 = bw2, bw3 = bw3, snooze = snooze, stringent_slope_warning = stringent_slope_warning, attach = attach, approximate = approximate),
                  by = by]
@@ -552,7 +554,7 @@ xwarning_process <- function(data, by, from = "2021-12-31", to = "2022-12-30", m
 #' @param data A \code{data.table} containing measurements.
 #' @param from A \code{IDate} value. The start of the warning process, i.e., the first date where a warning is calculated.
 #' @param to A \code{IDate} value. The end of the warning process, i.e., the last date where a warning is calculated.
-#' @param method A \code{character} signifying which smoothing method that is used for the slope warnings. Valid options include \code{lc} (Local-Average kernel smoothing) and \code{ll} (Local-Linear kernel smoothing).
+#' @param method A \code{character} signifying which kernel smoothing method that is used for the slope warnings. Valid options include \code{lc} (Local-Average kernel smoothing) and \code{ll} (Local-Linear kernel smoothing).
 #' @param tol_median_slope A \code{double} value. What is the warning threshold for the median slope warning?
 #' @param tol_hyper_slope A \code{double} value. What is the warning threshold for the hyper slope warning?
 #' @param tol_hypo_slope A \code{double} value. What is the warning threshold for the hypo slope warning?
@@ -560,19 +562,23 @@ xwarning_process <- function(data, by, from = "2021-12-31", to = "2022-12-30", m
 #' @param tol_hyper_bias A \code{double} value. What is the warning threshold for the hyper month-year bias warning?
 #' @param tol_hypo_bias A \code{double} value. What is the warning threshold for the hypo month-year bias warning?
 #' @param tol_pg  A \code{double} value. What is the warning threshold for the median peer group bias warning?
-#' @param dur A \code{integer} value. How many days must the gradient be above the threshold given in \code{tol} in order to trigger a slope warning. Will be the same for all measures for the slope warning.
-#' @param bw1 A \code{double}. The bandwidth used for the kernel smoothing. Typically set to 11.
-#' @param bw2 A \code{double}. The bandwidth used for monthly moving median. Typically set to 30.
-#' @param bw3 A \code{double}. The bandwidth used for yearly moving median. Typically set to 365.
+#' @param dur An \code{integer} value. How many days must the gradient be above the threshold given in \code{tol} in order to trigger a slope warning. Will be the same for all measures for the slope warning. The default is \code{3}.
+#' @param bw1 A \code{double} value. The bandwidth used for the kernel smoothing. Typically set to 11.
+#' @param bw2 An \code{integer} value. The bandwidth used for monthly moving median and the monthly median for peer group data. Typically set to 30.
+#' @param bw3 An \code{integer} value. The bandwidth used for yearly moving median. Typically set to 365.
 #' @param only_warnings A \code{logical} value. If set to \code{TRUE}, only the dates with warnings generated are outputted. If set to \code{FALSE}, the whole process it outputted.
 #'
-#' @return A \code{data.table} object containing the warning process information
+#' @return A \code{data.table} object containing the warning process information for each of the seven relevant warnings.
+#' The output columns for each type of warning may be slightly different, so the output \code{data.table} from this function will contain a lot for columns.
 #' @export
 #'
 #' @examples print(1)
 xgenerate_warnings <- function(data, from = "2022-01-02", to = "2023-01-01", method = c("lc", "ll"), tol_median_slope = 2, tol_hyper_slope = 8, tol_hypo_slope = 8, tol_median_bias = 10, tol_hyper_bias = 10, tol_hypo_bias = 10, tol_pg = 10, dur = 3, bw1 = 11, bw2 = 30, bw3 = 365, only_warnings = FALSE){
 
+  # Global variables need to be adressed here
   `Measured At` <- `Analyte Name` <- `Laboratory Code` <- `Instrument Code` <- `Warning Type` <- NULL
+
+  # If a vector is given, just keep the first element
   method <- method[1]
   actual_from <- as.IDate(from) - 1
   actual_to <- as.IDate(to) - 1
@@ -588,9 +594,7 @@ xgenerate_warnings <- function(data, from = "2022-01-02", to = "2023-01-01", met
   slope_hypo_warnings$`Warning Type` <- "SMOOTHED_HYPO_DEVIATES_FOR_DAYS"
   slope_hypo_warnings$`Threshold Value` <- tol_hypo_slope
 
-  slope_warnings <- rbind(slope_median_warnings,
-                          slope_hyper_warnings,
-                          slope_hypo_warnings, fill = TRUE)
+  slope_warnings <- rbind(slope_median_warnings, slope_hyper_warnings, slope_hypo_warnings, fill = TRUE)
   slope_warnings$`Warning At` <- slope_warnings$`Measured At` + 1
 
   setcolorder(slope_warnings, c("Warning At", "Measured At", "Analyte Name", "Instrument Code", "Laboratory Code", "Warning Type", "Threshold Value", "Evaluated Slopes", "Evaluated Days", "Evaluated Average", "Evaluated Standard Deviation", "Condition Met", "Is Warning"))
@@ -608,10 +612,7 @@ xgenerate_warnings <- function(data, from = "2022-01-02", to = "2023-01-01", met
   bias_hypo_warnings$`Warning Type` <- "MONTHLY_HYPO_DEVIATES_FROM_PREVIOUS_YEAR"
   bias_hypo_warnings$`Threshold Value` <- tol_hypo_bias
 
-  bias_warnings <- rbind(bias_median_warnings,
-                         bias_hyper_warnings,
-                         bias_hypo_warnings, fill = TRUE)
-
+  bias_warnings <- rbind(bias_median_warnings, bias_hyper_warnings, bias_hypo_warnings, fill = TRUE)
   bias_warnings$`Warning At` <- bias_warnings$`Measured At` + 1
 
   setcolorder(bias_warnings, c("Warning At", "Measured At", "Analyte Name", "Instrument Code", "Laboratory Code", "Warning Type", "Threshold Value", "Monthly Median", "Monthly Start Date", "Monthly Number of Results", "Yearly Median", "Yearly Start Date", "Yearly Number of Results", "Bias Percentage", "Is Warning"))
