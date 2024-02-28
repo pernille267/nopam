@@ -12,7 +12,9 @@
 #' @examples print(1)
 
 kernel_smoothing_check <- function(data, by, measure = c("median", "hyper", "hypo"), tol = 2, only_acceptable = TRUE){
+
   `m` <- `Median` <- `Hyper Percentage` <- `Hypo Percentage` <- `Measured At` <- `Laboratory Code` <- `Number of results` <- NULL
+
   measure <- measure[1]
   if(measure == "median"){
     data[, m := Median,]

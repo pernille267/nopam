@@ -920,6 +920,10 @@
 # define __UINT_LEAST16_TYPE__ short unsigned int
 #endif
 
+#ifndef __DEC128_MAX_EXP__
+# define __DEC128_MAX_EXP__ 6145
+#endif
+
 #ifndef __DBL_HAS_DENORM__
 # define __DBL_HAS_DENORM__ 1
 #endif
@@ -1662,10 +1666,6 @@
 
 #ifndef _INTEGRAL_MAX_BITS
 # define _INTEGRAL_MAX_BITS 64
-#endif
-
-#ifndef __DEC128_MAX_EXP__
-# define __DEC128_MAX_EXP__ 6145
 #endif
 
 #ifndef __FLT32X_HAS_QUIET_NAN__
