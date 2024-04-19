@@ -46,68 +46,7 @@ xwarning_process0 <- function(data, pg_data = NULL, from = "2021-01-01", to = "2
     current_sd <- sapply(1:length(slope_warning_start_window), FUN = function(i) sd(data[`Measured At` <= slope_warning_end_window[i]]$`Median`, na.rm = TRUE), simplify = TRUE)
     sub_data <- sapply(1:length(slope_warning_start_window), FUN = function(i) data[`Measured At` >= slope_warning_start_window[i] & `Measured At` <= slope_warning_end_window[i]], simplify = FALSE)
 
-    valid_slope_window <- function(window, measure, dur = 3L){
-      if(measure == "median"){
-        minimum_requirement <- (nrow(window) >= 1) & (sum(!is.na(window$Median)) >= dur + 2)
-        if(!minimum_requirement){
-          return(minimum_requirement)
-        }
-        weekend_days <- window$`Is Weekend`[order(window$`Measured At`, decreasing = TRUE)[1:(dur + 2)]]
-        safe_guard <- min(dur + 2 + 1, nrow(window))
-        weekend_day_extra <- window$`Is Weekend`[order(window$`Measured At`, decreasing = TRUE)[safe_guard]]
-        na_days <- is.na(window$Median[order(window$`Measured At`, decreasing = TRUE)[1:(dur + 2)]])
-        na_day_extra <- is.na(window$Median[order(window$`Measured At`, decreasing = TRUE)[safe_guard]]) & (nrow(window) >= dur + 2 + 1)
-        na_weekend_days <- weekend_days & na_days
-        number_of_na_weekend_days <- sum(na_weekend_days)
-        if(na_days[dur + 2] & na_day_extra){
-          number_of_na_weekend_days <- number_of_na_weekend_days + (na_day_extra & weekend_day_extra)
-        }
-        safe_guard <- min(dur + 2 + number_of_na_weekend_days, nrow(window))
-        has_enough_last_values <- sum(!is.na(window$Median[order(window$`Measured At`, decreasing = TRUE)[1:safe_guard]])) == dur + 2
-
-        return(minimum_requirement & has_enough_last_values)
-      }
-      else if(measure == "hyper"){
-        minimum_requirement <- (nrow(window) >= 1) & (sum(!is.na(window$`Hyper Percentage`)) >= dur + 2)
-        if(!minimum_requirement){
-          return(minimum_requirement)
-        }
-        weekend_days <- window$`Is Weekend`[order(window$`Measured At`, decreasing = TRUE)[1:(dur + 2)]]
-        safe_guard <- min(dur + 2 + 1, nrow(window))
-        weekend_day_extra <- window$`Is Weekend`[order(window$`Measured At`, decreasing = TRUE)[safe_guard]]
-        na_days <- is.na(window$`Hyper Percentage`[order(window$`Measured At`, decreasing = TRUE)[1:(dur + 2)]])
-        na_day_extra <- is.na(window$`Hyper Percentage`[order(window$`Measured At`, decreasing = TRUE)[safe_guard]]) & (nrow(window) >= dur + 2 + 1)
-        na_weekend_days <- weekend_days & na_days
-        number_of_na_weekend_days <- sum(na_weekend_days)
-        if(na_days[dur + 2] & na_day_extra){
-          number_of_na_weekend_days <- number_of_na_weekend_days + (na_day_extra & weekend_day_extra)
-        }
-        safe_guard <- min(dur + 2 + number_of_na_weekend_days, nrow(window))
-        has_enough_last_values <- sum(!is.na(window$`Hyper Percentage`[order(window$`Measured At`, decreasing = TRUE)[1:safe_guard]])) == dur + 2
-        return(minimum_requirement & has_enough_last_values)
-      }
-      else if(measure == "hypo"){
-        minimum_requirement <- (nrow(window) >= 1) & (sum(!is.na(window$`Hypo Percentage`)) >= dur + 2)
-        if(!minimum_requirement){
-          return(minimum_requirement)
-        }
-        weekend_days <- window$`Is Weekend`[order(window$`Measured At`, decreasing = TRUE)[1:(dur + 2)]]
-        safe_guard <- min(dur + 2 + 1, nrow(window))
-        weekend_day_extra <- window$`Is Weekend`[order(window$`Measured At`, decreasing = TRUE)[safe_guard]]
-        na_days <- is.na(window$`Hypo Percentage`[order(window$`Measured At`, decreasing = TRUE)[1:(dur + 2)]])
-        na_day_extra <- is.na(window$`Hypo Percentage`[order(window$`Measured At`, decreasing = TRUE)[safe_guard]]) & (nrow(window) >= dur + 2 + 1)
-        na_weekend_days <- weekend_days & na_days
-        number_of_na_weekend_days <- sum(na_weekend_days)
-        if(na_days[dur + 2] & na_day_extra){
-          number_of_na_weekend_days <- number_of_na_weekend_days + (na_day_extra & weekend_day_extra)
-        }
-        safe_guard <- min(dur + 2 + number_of_na_weekend_days, nrow(window))
-        has_enough_last_values <- sum(!is.na(window$`Hypo Percentage`[order(window$`Measured At`, decreasing = TRUE)[1:safe_guard]])) == dur + 2
-        return(minimum_requirement & has_enough_last_values)
-      }
-    }
-
-    valid_windows <- sapply(X = sub_data, FUN = valid_slope_window, measure, dur, simplify = TRUE)
+    valid_windows <- sapply(X = sub_data, FUN = valid_slope_window_x, measure, dur, simplify = TRUE)
 
     output <- lapply(1:length(valid_windows), FUN = function(i){
       if(measure == "median"){

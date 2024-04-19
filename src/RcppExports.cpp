@@ -11,6 +11,19 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// get_gaps
+IntegerVector get_gaps(NumericVector x, bool get_grouping, bool get_last_group);
+RcppExport SEXP _nopam_smoothing_get_gaps(SEXP xSEXP, SEXP get_groupingSEXP, SEXP get_last_groupSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type get_grouping(get_groupingSEXP);
+    Rcpp::traits::input_parameter< bool >::type get_last_group(get_last_groupSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_gaps(x, get_grouping, get_last_group));
+    return rcpp_result_gen;
+END_RCPP
+}
 // laks
 List laks(NumericVector date, NumericVector median, double bandwidth, double average, double standard_deviation, bool approximate, double tol);
 RcppExport SEXP _nopam_smoothing_laks(SEXP dateSEXP, SEXP medianSEXP, SEXP bandwidthSEXP, SEXP averageSEXP, SEXP standard_deviationSEXP, SEXP approximateSEXP, SEXP tolSEXP) {
@@ -141,6 +154,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_nopam_smoothing_get_gaps", (DL_FUNC) &_nopam_smoothing_get_gaps, 3},
     {"_nopam_smoothing_laks", (DL_FUNC) &_nopam_smoothing_laks, 7},
     {"_nopam_smoothing_laks_loo", (DL_FUNC) &_nopam_smoothing_laks_loo, 3},
     {"_nopam_smoothing_llks", (DL_FUNC) &_nopam_smoothing_llks, 8},
